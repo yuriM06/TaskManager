@@ -1,0 +1,71 @@
+/* ヘッダーのスタイル */
+.header-container {
+  background-color: #00bcd4; /* 水色 */
+  color: white;
+  margin: 0; /* 隙間をなくす */
+  padding: 5px 0; /* 細くする */
+}
+
+.header-nav ul {
+  list-style-type: none;
+  display: flex;
+  justify-content: flex-end; /* 右寄せ */
+  padding: 0;
+  margin: 0; /* ヘッダー内の余白をなくす */
+}
+
+.header-nav li {
+  margin: 0 10px; /* リスト間のスペース */
+}
+
+.header-nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.header-nav a:hover {
+  color: #007bff;
+}
+
+/* 横並びレイアウト */
+.container {
+  display: flex;
+  height: 100vh;
+  margin-top: 0; /* ヘッダーとの隙間をなくす */
+}
+
+/* メニュー部分 */
+.menu {
+  width: 10%;
+  background-color: #f4f4f4;
+  padding: 20px;
+  margin-top: 0;
+}
+
+/* コンテンツ部分 */
+.content {
+  width: 80%;
+  padding: 20px;
+}
+
+/* メニューのスタイル */
+.menu ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu li {
+  margin-bottom: 10px;
+}
+
+.menu a {
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+}
+
+.menu a:hover {
+  color: #007bff;
+}
