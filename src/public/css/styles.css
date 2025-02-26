@@ -1,21 +1,30 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 /* ヘッダーのスタイル */
 .header-container {
-  background-color: #00bcd4; /* 水色 */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #00bcd4;
   color: white;
-  margin: 0; /* 隙間をなくす */
-  padding: 5px 0; /* 細くする */
+  margin: 0;
+  padding: 20px 16px;
 }
 
 .header-nav ul {
   list-style-type: none;
   display: flex;
-  justify-content: flex-end; /* 右寄せ */
+  justify-content: flex-end;
   padding: 0;
-  margin: 0; /* ヘッダー内の余白をなくす */
+  margin: 0;
 }
 
 .header-nav li {
-  margin: 0 10px; /* リスト間のスペース */
+  margin: 0 10px;
 }
 
 .header-nav a {
@@ -32,7 +41,7 @@
 .container {
   display: flex;
   height: 100vh;
-  margin-top: 0; /* ヘッダーとの隙間をなくす */
+  margin-top: 0;
 }
 
 /* メニュー部分 */
@@ -68,4 +77,29 @@
 
 .menu a:hover {
   color: #007bff;
+}
+
+/* アラームのバッジ */
+.badge {
+  background-color: red;
+  color: white;
+  font-size: 10px;
+  line-height: 1;
+  font-weight: bold;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: -8px;
+  right: -10px;
+}
+
+.alarm-link {
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+  color: black;
 }

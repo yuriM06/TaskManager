@@ -12,5 +12,6 @@ Route::view('/my_task', 'my_task')->name('my_task');
 
 // ヘッダー
 Route::view('/create', 'tasks.create')->name('create');
-// Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications');
-// Route::get('/alarms', [AlarmController::class, 'index'])->name('alarms');
+// Route::get('/notifications', [NotificationController::class, ''])->name('notifications');
+Route::view('/alarms', 'alarms')->name('alarms');
+Route::get('/alarms', [TaskController::class, 'alarms'])->name('alarms');

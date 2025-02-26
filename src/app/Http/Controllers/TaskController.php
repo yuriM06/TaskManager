@@ -3,15 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\Task;
+use Illuminate\Support\Facades\View;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class TaskController extends Controller
 {
     // 一覧表示
     public function index()
     {
-        $tasks = Task::all(); // すべてのタスクを取得
-        return view('tasks.index', compact('tasks')); // ビューに渡す
+        $tasks = Task::all();
+        return view('tasks.index', compact('tasks'));
     }
 
     // 新規作成フォーム
@@ -27,15 +29,17 @@ class TaskController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'status' => 'required|string',
+            'due_date' => 'nullable|date',
         ]);
 
         Task::create([
             'title' => $request->title,
             'description' => $request->description,
             'status' => $request->status,
+            'due_date' => $request->due_date,
         ]);
 
-        return redirect()->route('tasks.task_all')->with('success', 'タスクが作成されました');
+        return redirect()->route('tasks.index')->with('success', 'タスクが作成されました');
     }
 
     // 詳細表示
@@ -59,6 +63,7 @@ class TaskController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'status' => 'required|string',
+            'due_date' => 'nullable|date',
         ]);
 
         $task = Task::findOrFail($id);
@@ -66,9 +71,10 @@ class TaskController extends Controller
             'title' => $request->title,
             'description' => $request->description,
             'status' => $request->status,
+            'due_date' => $request->due_date,
         ]);
 
-        return redirect()->route('tasks.task_all')->with('success', 'タスクが更新されました');
+        return redirect()->route('tasks.index')->with('success', 'タスクが更新されました');
     }
 
     // 削除処理
@@ -77,6 +83,18 @@ class TaskController extends Controller
         $task = Task::findOrFail($id);
         $task->delete();
 
-        return redirect()->route('tasks.task_all')->with('success', 'タスクが削除されました');
+        return redirect()->route('tasks.index')->with('success', 'タスクが削除されました');
+    }
+
+    // 期限が当日のものを取得
+    public function alarms()
+    {
+        $today = Carbon::today();
+        $tasks = Task::whereDate('due_date', '<', $today)
+            ->where('status', '!=', 'completed')
+            ->get();
+        $tasksCount = $tasks->count();
+
+        return view('alarms', compact('tasks', 'tasksCount'));
     }
 }
