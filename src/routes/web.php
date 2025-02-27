@@ -11,7 +11,6 @@ Route::get('/tasks', [TaskController::class, 'index'])->name('tasks.index');
 Route::get('/my_task', [TaskController::class, 'ganttChart'])->name('my_task');
 
 // ヘッダー
-Route::view('/create', 'tasks.create')->name('create');
+Route::get('/create', [TaskController::class, 'create'])->name('tasks.create');
 // Route::get('/notifications', [NotificationController::class, ''])->name('notifications');
-Route::view('/alarms', 'alarms')->name('alarms');
 Route::get('/alarms', [TaskController::class, 'alarms'])->name('alarms');

@@ -20,7 +20,8 @@ class TaskController extends Controller
     // 新規作成フォーム
     public function create()
     {
-        return view('tasks.create');
+        $tasks = Task::all();
+        return view('tasks.create', compact('tasks'));
     }
 
     // 新規作成処理

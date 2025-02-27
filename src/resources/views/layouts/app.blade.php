@@ -18,7 +18,7 @@
     <h1>タスク管理</h1>
     <nav class="header-nav">
       <ul>
-        <li><a href="{{ route('create') }}">新規作成</a></li>
+        <li><a href="{{ route('tasks.create') }}">新規作成</a></li>
         {{-- <li><a href="{{ route('notifications') }}">お知らせ</a></li> --}}
         <li>
           <a href="{{ route('alarms') }}" class="alarm-link">
