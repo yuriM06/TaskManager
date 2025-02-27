@@ -18,7 +18,7 @@ class TaskController extends Controller
     }
 
     // 新規作成フォーム
-    public function create(TaskRequest $request)
+    public function create()
     {
         return view('tasks.create');
     }

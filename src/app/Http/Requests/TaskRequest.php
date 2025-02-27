@@ -26,7 +26,7 @@ class TaskRequest extends FormRequest
             'description' => 'required|string',
             'status' => 'required|string',
             'start_date' => 'nullable|date',
-            'due_date' => 'nullable|date|after_or_equal:start_date', // start_dateがある場合は、それ以降である必要
+            'due_date' => 'nullable|date|after_or_equal:start_date',
             'progress' => 'nullable|numeric|min:0|max:1',
             'parent_id' => 'nullable|exists:tasks,id',
         ];

@@ -20,7 +20,10 @@ class Task extends Model
         'parent_id',
     ];
 
-    protected $dates = ['start_date', 'due_date'];
+    protected $casts = [
+        'start_date'=> 'datetime:Y-m-d',
+        'due_date'=> 'datetime:Y-m-d',
+    ];
 
     // 親タスクとのリレーション
     public function parent()
@@ -34,18 +37,6 @@ class Task extends Model
         return $this->hasMany(Task::class, 'parent_id');
     }
 
-    // 日付のインスタンス化（null対応）
-    // 日付のインスタンス化
-    public function getStartDateAttribute($value)
-    {
-        return $value ? Carbon::parse($value)->format('Y-m-d') : null;
-    }
-
-    public function getDueDateAttribute($value)
-    {
-        return $value ? Carbon::parse($value)->format('Y-m-d') : null;
-    }
-
     protected static function boot()
     {
         parent::boot();
@@ -53,10 +44,10 @@ class Task extends Model
         // 期日設定
         static::creating(function ($task) {
             if (!$task->due_date) {
-                $task->due_date = now()->addWeek();  // 期日が設定されていなければ1週間後をデフォルト
+                $task->due_date = now()->addWeek();
             }
             if (!$task->start_date) {
-                $task->start_date = now();  // 開始日が設定されていなければ今日をデフォルト
+                $task->start_date = now();
             }
         });
     }

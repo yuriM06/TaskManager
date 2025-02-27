@@ -12,19 +12,19 @@
     <svg id="gantt"></svg>
     <script type="text/javascript">
         document.addEventListener("DOMContentLoaded", function() {
-            // Laravelから渡されたタスクデータを取得
+            // タスクデータを取得
             var tasks = @json($tasks);
             var today = @json($today);
 
-            // Frappe Gantt 用にタスクデータを変換
+            // FrappeGantt用にタスクデータを変換
             var ganttData = tasks.map(function(task) {
                 return {
                     id: task.id,
-                    name: task.title, // タスク名
-                    start: task.start_date, // 開始日
-                    end: task.due_date, // 終了日
-                    progress: task.progress || 0, // 進捗
-                    dependencies: task.parent_id ? task.parent_id : "" // 親タスク（もしあれば）
+                    name: task.title,
+                    start: task.start_date,
+                    end: task.due_date,
+                    progress: task.progress || 0,
+                    dependencies: task.parent_id ? task.parent_id : ""
                 };
             });
 
@@ -36,12 +36,11 @@
                 view_modes: ["Quarter Day", "Half Day", "Day", "Week", "Month"],
                 bar_height: 20,
                 padding: 18,
-                view_mode: "Day", // 初期表示のスケールを「日」に設定
-                date_format: "YYYY-MM-DD", // 日付フォーマット
-                today: today, // 今日の日付を強調表示
+                view_mode: "Day",
+                date_format: "YYYY-MM-DD",
+                today: today,
             });
 
-            // ガントチャートの描画
             gantt.render();
         });
     </script>
