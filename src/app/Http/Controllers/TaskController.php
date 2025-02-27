@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Task;
 use Illuminate\Support\Facades\View;
-use Illuminate\Http\Request;
+// use Illuminate\Http\Request;
+use App\Http\Requests\TaskRequest;
 use Carbon\Carbon;
 
 class TaskController extends Controller
@@ -23,21 +24,9 @@ class TaskController extends Controller
     }
 
     // 新規作成処理
-    public function store(Request $request)
+    public function store(TaskRequest $request)
     {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'status' => 'required|string',
-            'due_date' => 'nullable|date',
-        ]);
-
-        Task::create([
-            'title' => $request->title,
-            'description' => $request->description,
-            'status' => $request->status,
-            'due_date' => $request->due_date,
-        ]);
+        Task::create($request->validated());
 
         return redirect()->route('tasks.index')->with('success', 'タスクが作成されました');
     }
@@ -57,22 +46,10 @@ class TaskController extends Controller
     }
 
     // 編集処理
-    public function update(Request $request, $id)
+    public function update(TaskRequest $request, $id)
     {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'status' => 'required|string',
-            'due_date' => 'nullable|date',
-        ]);
-
         $task = Task::findOrFail($id);
-        $task->update([
-            'title' => $request->title,
-            'description' => $request->description,
-            'status' => $request->status,
-            'due_date' => $request->due_date,
-        ]);
+        $task->update($request->validated());
 
         return redirect()->route('tasks.index')->with('success', 'タスクが更新されました');
     }
@@ -86,7 +63,7 @@ class TaskController extends Controller
         return redirect()->route('tasks.index')->with('success', 'タスクが削除されました');
     }
 
-    // 期限が当日のものを取得
+    // 期限が当日~過ぎたものを取得
     public function alarms()
     {
         $today = Carbon::today();
