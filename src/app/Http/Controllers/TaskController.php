@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Task;
 use Illuminate\Support\Facades\View;
-// use Illuminate\Http\Request;
+use Illuminate\Http\Request;
 use App\Http\Requests\TaskRequest;
 use Carbon\Carbon;
 
@@ -18,7 +18,7 @@ class TaskController extends Controller
     }
 
     // 新規作成フォーム
-    public function create()
+    public function create(TaskRequest $request)
     {
         return view('tasks.create');
     }
@@ -73,5 +73,14 @@ class TaskController extends Controller
         $tasksCount = $tasks->count();
 
         return view('alarms', compact('tasks', 'tasksCount'));
+    }
+
+    // ガントチャート
+    public function ganttChart()
+    {
+        $tasks = Task::orderBy('due_date', 'asc')->get();
+        $today = Carbon::today()->toDateString();
+
+        return view('my_task', compact('tasks', 'today'));
     }
 }

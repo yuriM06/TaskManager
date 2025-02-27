@@ -12,7 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('tasks', function (Blueprint $table) {
-            $table->date('due_date')->nullable()->after('status'); // 期日を追加
+            $table->decimal('progress', 5, 2)->default(0);  // タスクの進捗 (0〜1の範囲)
+            $table->unsignedBigInteger('parent_id')->nullable();  // 親タスクのID（親子関係）
+            $table->foreign('parent_id')->references('id')->on('tasks');  // 親タスクとのリレーション
         });
     }
 
@@ -22,7 +24,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('tasks', function (Blueprint $table) {
-            //
+            $table->dropColumn('progress');
+            $table->dropColumn('parent_id');
         });
     }
 };

@@ -37,7 +37,6 @@
   color: #007bff;
 }
 
-/* 横並びレイアウト */
 .container {
   display: flex;
   height: 100vh;
@@ -52,13 +51,11 @@
   margin-top: 0;
 }
 
-/* コンテンツ部分 */
 .content {
   width: 80%;
   padding: 20px;
 }
 
-/* メニューのスタイル */
 .menu ul {
   list-style-type: none;
   padding: 0;
