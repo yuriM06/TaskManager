@@ -12,7 +12,7 @@
         <textarea name="description" required></textarea>
 
         <label for="status">ステータス:</label>
-        <x-status-select name="status" :selected="$task->status" />
+        <x-status-select name="status" class="form-control" />
 
         <label for="due_date">期日:</label>
         <input type="date" name="due_date" value="{{ old('due_date', now()->addWeek()->format('Y-m-d')) }}">

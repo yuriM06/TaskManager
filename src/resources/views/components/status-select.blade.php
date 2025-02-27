@@ -12,10 +12,10 @@
 @endphp
 
 {{-- プルダウンのステータス --}}
-@if(request()->routeIs('tasks.show'))
+@if(request()->routeIs('tasks.show') || request()->routeIs('tasks.index'))
     {{ $statusOptions[$selected] ?? '未設定' }}
 @else
-    <select name="{{ $name }}" {{ $disabled ? 'disabled' : '' }} {{ $attributes }}>
+    <select name="{{ $name ?? 'status' }}" >
         @foreach ($statusOptions as $value => $label)
             <option value="{{ $value }}" {{ $selected == $value ? 'selected' : '' }}>
                 {{ $label }}
