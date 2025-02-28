@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::table('tasks', function (Blueprint $table) {
             $table->date('due_date')->nullable()->after('status'); // 期日を追加
+            $table->date('start_date');
         });
     }
 

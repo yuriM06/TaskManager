@@ -9,6 +9,7 @@ Route::resource('tasks', TaskController::class);
 Route::view('/', 'home')->name('home');
 Route::get('/tasks', [TaskController::class, 'index'])->name('tasks.index');
 Route::get('/my_task', [TaskController::class, 'ganttChart'])->name('my_task');
+Route::put('/tasks/{id}', [TaskController::class, 'update']);
 
 // ヘッダー
 Route::get('/create', [TaskController::class, 'create'])->name('tasks.create');
