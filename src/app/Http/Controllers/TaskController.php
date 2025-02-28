@@ -3,39 +3,33 @@
 namespace App\Http\Controllers;
 
 use App\Models\Task;
+use Illuminate\Support\Facades\View;
 use Illuminate\Http\Request;
+use App\Http\Requests\TaskRequest;
+use Carbon\Carbon;
 
 class TaskController extends Controller
 {
     // 一覧表示
     public function index()
     {
-        $tasks = Task::all(); // すべてのタスクを取得
-        return view('tasks.index', compact('tasks')); // ビューに渡す
+        $tasks = Task::all();
+        return view('tasks.index', compact('tasks'));
     }
 
     // 新規作成フォーム
     public function create()
     {
-        return view('tasks.create');
+        $tasks = Task::all();
+        return view('tasks.create', compact('tasks'));
     }
 
     // 新規作成処理
-    public function store(Request $request)
+    public function store(TaskRequest $request)
     {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'status' => 'required|string',
-        ]);
+        Task::create($request->validated());
 
-        Task::create([
-            'title' => $request->title,
-            'description' => $request->description,
-            'status' => $request->status,
-        ]);
-
-        return redirect()->route('tasks.task_all')->with('success', 'タスクが作成されました');
+        return redirect()->route('tasks.index')->with('success', 'タスクが作成されました');
     }
 
     // 詳細表示
@@ -53,22 +47,12 @@ class TaskController extends Controller
     }
 
     // 編集処理
-    public function update(Request $request, $id)
+    public function update(TaskRequest $request, $id)
     {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'status' => 'required|string',
-        ]);
-
         $task = Task::findOrFail($id);
-        $task->update([
-            'title' => $request->title,
-            'description' => $request->description,
-            'status' => $request->status,
-        ]);
+        $task->update($request->validated());
 
-        return redirect()->route('tasks.task_all')->with('success', 'タスクが更新されました');
+        return redirect()->route('tasks.index')->with('success', 'タスクが更新されました');
     }
 
     // 削除処理
@@ -77,6 +61,27 @@ class TaskController extends Controller
         $task = Task::findOrFail($id);
         $task->delete();
 
-        return redirect()->route('tasks.task_all')->with('success', 'タスクが削除されました');
+        return redirect()->route('tasks.index')->with('success', 'タスクが削除されました');
+    }
+
+    // 期限が当日~過ぎたものを取得
+    public function alarms()
+    {
+        $today = Carbon::today();
+        $tasks = Task::whereDate('due_date', '<', $today)
+            ->where('status', '!=', 'completed')
+            ->get();
+        $tasksCount = $tasks->count();
+
+        return view('alarms', compact('tasks', 'tasksCount'));
+    }
+
+    // ガントチャート
+    public function ganttChart()
+    {
+        $tasks = Task::orderBy('due_date', 'asc')->get();
+        $today = Carbon::today()->toDateString();
+
+        return view('my_task', compact('tasks', 'today'));
     }
 }
