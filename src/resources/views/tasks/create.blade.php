@@ -21,7 +21,7 @@
         <input type="date" name="due_date" value="{{ old('due_date', now()->addWeek()->format('Y-m-d')) }}">
 
         <label for="progress">進捗:</label>
-        <input type="number" name="progress" step="0.01" min="0" max="1" value="{{ old('progress', 0) }}" placeholder="進捗 (0〜1)">
+        <input type="number" name="progress" step="0.01" min="0" max="100" value="{{ old('progress', 0) }}" placeholder="進捗 (0〜100)">
 
         <label for="parent_id">親タスク:</label>
         <select name="parent_id">

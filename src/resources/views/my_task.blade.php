@@ -47,6 +47,7 @@
                 padding: 18,
                 view_mode: "Day",
                 date_format: "YYYY-MM-DD",
+                // タスク日付変更時
                 on_date_change: function(task, start, end) {
                     var modifiedTask = modifiedTasks.find(t => t.id === task.id);
                     if (modifiedTask) {
@@ -59,10 +60,18 @@
                             end: end
                         });
                     }
-                    // console.log("Modified Tasks:", modifiedTasks); // デバッグ用
-                    // console.log("Modified Task:", modifiedTask); // デバッグ用
-
-                }
+                },
+                // on_progress_change: (task, progress) => {
+                //     var modifiedTask = modifiedTasks.find(t => t.id === task.id);
+                //     if (modifiedTask) {
+                //         modifiedTask.progress = progress;
+                //     } else {
+                //         modifiedTasks.push({
+                //             id: task.id,
+                //             progress: progress,
+                //         });
+                //     }
+                // },
             });
             // 変更内容送信
             document.getElementById('updateBtn').addEventListener('click', function(event) {

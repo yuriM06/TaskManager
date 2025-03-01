@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('tasks', function (Blueprint $table) {
-            $table->decimal('progress', 5, 2)->default(0);  // タスクの進捗 (0〜1の範囲)
+            $table->unsignedInteger('progress')->default(0);  // タスクの進捗 (0〜100の範囲)
             $table->unsignedBigInteger('parent_id')->nullable();  // 親タスクのID（親子関係）
             $table->foreign('parent_id')->references('id')->on('tasks');  // 親タスクとのリレーション
         });

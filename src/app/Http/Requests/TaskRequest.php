@@ -27,7 +27,7 @@ class TaskRequest extends FormRequest
             'status' => 'required|string',
             'start_date' => 'nullable|date',
             'due_date' => 'nullable|date|after_or_equal:start_date',
-            'progress' => 'nullable|numeric|min:0|max:1',
+            'progress' => 'nullable|numeric|min:0|max:100',
             'parent_id' => 'nullable|exists:tasks,id',
         ];
     }

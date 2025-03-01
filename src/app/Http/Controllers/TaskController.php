@@ -42,8 +42,9 @@ class TaskController extends Controller
     // 編集フォーム
     public function edit($id)
     {
+        $tasks = Task::all();
         $task = Task::findOrFail($id);
-        return view('tasks.edit', compact('task'));
+        return view('tasks.edit', compact('tasks', 'task'));
     }
 
     // 編集処理
