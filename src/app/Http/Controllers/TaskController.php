@@ -75,13 +75,4 @@ class TaskController extends Controller
 
         return view('alarms', compact('tasks', 'tasksCount'));
     }
-
-    // ガントチャート
-    public function ganttChart()
-    {
-        $tasks = Task::orderBy('due_date', 'asc')->get();
-        $today = Carbon::today()->toDateString();
-
-        return view('my_task', compact('tasks', 'today'));
-    }
 }

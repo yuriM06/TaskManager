@@ -2,14 +2,19 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\GanttChartController;
 
 Route::resource('tasks', TaskController::class);
+// Route::resource('my_task', GanttChartController::class);
 
 // メニュー
 Route::view('/', 'home')->name('home');
 Route::get('/tasks', [TaskController::class, 'index'])->name('tasks.index');
-Route::get('/my_task', [TaskController::class, 'ganttChart'])->name('my_task');
 Route::put('/tasks/{id}', [TaskController::class, 'update']);
+
+// ガントチャート
+Route::get('/my_task', [GanttChartController::class, 'ganttChart'])->name('my_task');
+Route::put('/my_task', [GanttChartController::class, 'update'])->name('my_task.update');
 
 // ヘッダー
 Route::get('/create', [TaskController::class, 'create'])->name('tasks.create');

@@ -3,70 +3,80 @@
 @section('content')
     <h2>個別課題 - ガントチャート</h2>
 
-    <!-- ガントチャート表示エリア -->
-    <div id="gantt_here" style="width: 100%; height: 500px;"></div>
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/frappe-gantt/0.6.1/frappe-gantt.css" integrity="sha512-57KPd8WI3U+HC1LxsxWPL2NKbW82g0BH+0PuktNNSgY1E50mnIc0F0cmWxdnvrWx09l8+PU2Kj+Vz33I+0WApw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/frappe-gantt/0.6.1/frappe-gantt.min.js" integrity="sha512-HyGTvFEibBWxuZkDsE2wmy0VQ0JRirYgGieHp0pUmmwyrcFkAbn55kZrSXzCgKga04SIti5jZQVjbTSzFpzMlg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/frappe-gantt/dist/frappe-gantt.umd.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/frappe-gantt/dist/frappe-gantt.css">
 
     <svg id="gantt"></svg>
+    <form id="updateForm" action="{{ route('my_task.update') }}" method="POST">
+        @csrf
+        @method('PUT')
+        <input type="hidden" name="modifiedTasks" id="modifiedTasks">
+        <button type="submit" id="updateBtn">更新</button>
+    </form>
     <script type="text/javascript">
         document.addEventListener("DOMContentLoaded", function() {
-    var tasks = @json($tasks);
-    var today = @json($today);
 
-    // Frappe Gantt 用データ変換
-    var ganttData = tasks.map(function(task) {
-        let start = task.start_date ? new Date(task.start_date).toISOString().split("T")[0] : null;
-        let end = task.due_date ? new Date(task.due_date).toISOString().split("T")[0] : null;
+            var tasksData = @json($tasks);
+            var modifiedTasks = [];
 
-        return {
-            id: task.id,
-            name: task.title,
-            start: start,
-            end: end,
-            progress: task.progress || 0,
-            dependencies: task.parent_id ? task.parent_id : ""
-        };
-    });
+            // FrappeGantt用データ変換
+            var ganttData = tasksData.map(function(task) {
+                var start = task.start_date ? new Date(task.start_date).toISOString().split("T")[0] : null;
+                var end = task.due_date ? new Date(task.due_date).toISOString().split("T")[0] : null;
 
-    console.log("Gantt Data:", ganttData); // データ確認用
+                return {
+                    id: task.id,
+                    name: task.title,
+                    start: start,
+                    end: end,
+                    progress: parseFloat(task.progress) || 0,
+                    dependencies: task.parent_id ? task.parent_id : ""
+                };
+            });
 
-    if (ganttData.length === 0) {
-        console.warn("No tasks available for Gantt chart.");
-        return;
-    }
+            if (ganttData.length === 0) {
+                console.warn("No tasks available for Gantt chart.");
+                return;
+            }
 
-    var gantt = new Gantt("#gantt_here", ganttData, {
-        header_height: 50,
-        column_width: 30,
-        step: "day",
-        view_modes: ["Quarter Day", "Half Day", "Day", "Week", "Month"],
-        bar_height: 20,
-        padding: 18,
-        view_mode: "Day",
-        date_format: "YYYY-MM-DD",
-        today: today,
-        on_date_change: function(task, start, end) {
-            console.log("Task updated:", task, start, end);
-            fetch(`/tasks/${task.id}`, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                    "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                },
-                body: JSON.stringify({
-                    start_date: start,
-                    due_date: end
-                })
-            }).then(response => response.json())
-              .then(data => console.log("Task successfully updated:", data))
-              .catch(error => console.error("Error updating task:", error));
-        }
-    });
+            var gantt = new Gantt("#gantt", ganttData, {
+                header_height: 50,
+                column_width: 30,
+                step: "day",
+                bar_height: 20,
+                padding: 18,
+                view_mode: "Day",
+                date_format: "YYYY-MM-DD",
+                on_date_change: function(task, start, end) {
+                    var modifiedTask = modifiedTasks.find(t => t.id === task.id);
+                    if (modifiedTask) {
+                        modifiedTask.start = start;
+                        modifiedTask.end = end;
+                    } else {
+                        modifiedTasks.push({
+                            id: task.id,
+                            start: start,
+                            end: end
+                        });
+                    }
+                    // console.log("Modified Tasks:", modifiedTasks); // デバッグ用
+                    // console.log("Modified Task:", modifiedTask); // デバッグ用
 
-    gantt.render();
-});
+                }
+            });
+            // 変更内容送信
+            document.getElementById('updateBtn').addEventListener('click', function(event) {
+
+                // modifiedTasksをセット
+                document.getElementById('modifiedTasks').value = JSON.stringify(modifiedTasks);
+
+                // フォームの送信
+                document.getElementById('updateForm').submit();
+                console.log("Before Submit:", modifiedTasks);
+            });
+
+            gantt.render();
+        });
 
     </script>
 @endsection
