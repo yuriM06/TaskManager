@@ -23,7 +23,9 @@
         <li>
           <a href="{{ route('tasks.create') }}">新規作成</a>
         </li>
-        {{-- <li><a href="{{ route('notifications') }}">お知らせ</a></li> --}}
+        <li>
+          <a href="{{ route('notifications') }}">お知らせ</a>
+        </li>
         <li>
           <a href="{{ route('alarms') }}" class="alarm-link">
             アラーム

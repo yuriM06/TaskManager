@@ -18,5 +18,6 @@ Route::put('/my_task', [GanttChartController::class, 'update'])->name('my_task.u
 
 // ヘッダー
 Route::get('/create', [TaskController::class, 'create'])->name('tasks.create');
+Route::view('notifications', 'notifications')->name('notifications');
 // Route::get('/notifications', [NotificationController::class, ''])->name('notifications');
 Route::get('/alarms', [TaskController::class, 'alarms'])->name('alarms');

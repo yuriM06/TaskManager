@@ -2,7 +2,7 @@
 
 @section('content')
     <h2>期限日以前のタスク</h2>
-    
+
     @if ($tasks->isEmpty())
         <p>本日期限のタスクはありません。</p>
     @else
