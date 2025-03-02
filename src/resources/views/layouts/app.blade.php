@@ -63,7 +63,7 @@
 </div>
 
 
-height: clac(100vh - 80px);
+
 
 
 </body>
