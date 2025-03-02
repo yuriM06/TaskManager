@@ -11,7 +11,7 @@
         @csrf
         @method('PUT')
         <input type="hidden" name="modifiedTasks" id="modifiedTasks">
-        <button type="submit" id="updateBtn">更新</button>
+        <button type="submit" id="updateBtn" class="btn btn-sm btn-primary">更新</button>
     </form>
     <script type="text/javascript">
         document.addEventListener("DOMContentLoaded", function() {
