@@ -13,7 +13,7 @@ Route::get('/tasks', [TaskController::class, 'index'])->name('tasks.index');
 Route::put('/tasks/{id}', [TaskController::class, 'update']);
 
 // ガントチャート
-Route::get('/my_task', [GanttChartController::class, 'ganttChart'])->name('my_task');
+Route::get('/my_task', [GanttChartController::class, 'getTasksForGanttChart'])->name('my_task');
 Route::put('/my_task', [GanttChartController::class, 'update'])->name('my_task.update');
 
 // ヘッダー

@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Task;
-use Illuminate\Support\Facades\View;
-use Illuminate\Http\Request;
 use App\Http\Requests\TaskRequest;
 use Carbon\Carbon;
+// use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
@@ -14,6 +13,7 @@ class TaskController extends Controller
     public function index()
     {
         $tasks = Task::all();
+
         return view('tasks.index', compact('tasks'));
     }
 
@@ -21,6 +21,7 @@ class TaskController extends Controller
     public function create()
     {
         $tasks = Task::all();
+
         return view('tasks.create', compact('tasks'));
     }
 
@@ -29,13 +30,14 @@ class TaskController extends Controller
     {
         Task::create($request->validated());
 
-        return redirect()->route('tasks.index')->with('success', 'タスクが作成されました');
+        return to_route('tasks.index')->with('success', 'タスクが作成されました');
     }
 
     // 詳細表示
     public function show($id)
     {
         $task = Task::findOrFail($id);
+
         return view('tasks.show', compact('task'));
     }
 
@@ -44,6 +46,7 @@ class TaskController extends Controller
     {
         $tasks = Task::all();
         $task = Task::findOrFail($id);
+
         return view('tasks.edit', compact('tasks', 'task'));
     }
 
@@ -53,7 +56,7 @@ class TaskController extends Controller
         $task = Task::findOrFail($id);
         $task->update($request->validated());
 
-        return redirect()->route('tasks.index')->with('success', 'タスクが更新されました');
+        return to_route('tasks.index')->with('success', 'タスクが更新されました');
     }
 
     // 削除処理
@@ -62,7 +65,7 @@ class TaskController extends Controller
         $task = Task::findOrFail($id);
         $task->delete();
 
-        return redirect()->route('tasks.index')->with('success', 'タスクが削除されました');
+        return to_route('tasks.index')->with('success', 'タスクが削除されました');
     }
 
     // 期限が当日~過ぎたものを取得

@@ -8,6 +8,7 @@ use Carbon\Carbon;
 
 class GanttChartController extends Controller
 {
+    // ガントチャートの日程更新処理
     public function update(GanttChartRequest $request)
     {
         // 受け取ったmodifiedTasksをデコード
@@ -15,18 +16,16 @@ class GanttChartController extends Controller
 
         foreach ($modifiedTasks as $modifiedTask) {
             $task = Task::find($modifiedTask['id']);
-            if ($task) {
-                $task->start_date = Carbon::parse($modifiedTask['start'])->setTimezone('Asia/Tokyo')->format('Y-m-d H:i:s');
-                $task->due_date = Carbon::parse($modifiedTask['end'])->setTimezone('Asia/Tokyo')->format('Y-m-d H:i:s');
-                $task->save();
-            }
+            $task->start_date = Carbon::parse($modifiedTask['start'])->setTimezone('Asia/Tokyo')->format('Y-m-d H:i:s');
+            $task->due_date = Carbon::parse($modifiedTask['end'])->setTimezone('Asia/Tokyo')->format('Y-m-d H:i:s');
+            $task->save();
         }
 
-        return redirect()->route('my_task')->with('success', 'タスクが更新されました');
+        return to_route('my_task')->with('success', 'タスクが更新されました');
     }
 
-    // ガントチャート
-    public function ganttChart()
+    // ガントチャートライブラリで使用するデータの取得
+    public function getTasksForGanttChart()
     {
         $tasks = Task::orderBy('due_date', 'asc')->get();
 

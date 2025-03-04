@@ -30,6 +30,7 @@
             window.checkTask = function() {
                 if (tasksData.length === 0) {
                     alert("タスクがありません");
+
                     return false;
                 } else {
                     return true;
@@ -53,6 +54,7 @@
 
             if (ganttData.length === 0) {
                 console.warn("No tasks available for Gantt chart.");
+
                 return;
             }
 

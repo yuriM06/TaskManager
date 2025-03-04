@@ -4,7 +4,7 @@
     <div class="container">
         <h2 class="mb-4">新規作成</h2>
 
-        <form action="{{ route('tasks.store') }}" method="POST">
+        <form action="{{ route('tasks.store') }}" method="POST" novalidate>
             @csrf
 
             <div class="mb-3">
