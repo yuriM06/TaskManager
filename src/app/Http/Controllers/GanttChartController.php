@@ -22,7 +22,7 @@ class GanttChartController extends Controller
             }
         }
 
-        return redirect()->route('my_task')->with('success', 'タスクが作成されました');
+        return redirect()->route('my_task')->with('success', 'タスクが更新されました');
     }
 
     // ガントチャート

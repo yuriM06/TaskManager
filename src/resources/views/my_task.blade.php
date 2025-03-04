@@ -6,18 +6,35 @@
     <script src="https://cdn.jsdelivr.net/npm/frappe-gantt/dist/frappe-gantt.umd.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/frappe-gantt/dist/frappe-gantt.css">
 
-    <svg id="gantt"></svg>
-    <form id="updateForm" action="{{ route('my_task.update') }}" method="POST">
+    <form id="updateForm" action="{{ route('my_task.update') }}" method="POST" onSubmit="return checkTask()">
         @csrf
         @method('PUT')
         <input type="hidden" name="modifiedTasks" id="modifiedTasks">
         <button type="submit" id="updateBtn" class="btn btn-sm btn-primary">更新</button>
     </form>
+
+    @if (session('success'))
+        <div>
+            {{ session('success') }}
+        </div>
+    @endif
+
+    <svg id="gantt"></svg>
     <script type="text/javascript">
         document.addEventListener("DOMContentLoaded", function() {
 
             var tasksData = @json($tasks);
             var modifiedTasks = [];
+
+            // タスクがない場合、update処理に使用する変数にnullを渡さないため
+            window.checkTask = function() {
+                if (tasksData.length === 0) {
+                    alert("タスクがありません");
+                    return false;
+                } else {
+                    return true;
+                }
+            }
 
             // FrappeGantt用データ変換
             var ganttData = tasksData.map(function(task) {
