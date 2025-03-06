@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Task;
 use App\Http\Requests\TaskRequest;
-use Carbon\Carbon;
-// use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
@@ -71,10 +69,7 @@ class TaskController extends Controller
     // 期限が当日~過ぎたものを取得
     public function alarms()
     {
-        $today = Carbon::today();
-        $tasks = Task::whereDate('due_date', '<', $today)
-            ->where('status', '!=', 'completed')
-            ->get();
+        $tasks = Task::alertTasks()->get();
         $tasksCount = $tasks->count();
 
         return view('alarms', compact('tasks', 'tasksCount'));

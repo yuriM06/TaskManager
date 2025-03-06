@@ -55,4 +55,10 @@ class Task extends Model
             }
         });
     }
+
+    public function scopeAlertTasks($query)
+    {
+        return $query->whereDate('due_date', '<=', now())
+                     ->where('status', '!=', 'completed');
+    }
 }
