@@ -29,8 +29,8 @@
         <li>
           <a href="{{ route('alarms') }}" class="alarm-link">
             アラーム
-            @if (isset($tasksCount) && $tasksCount > 0)
-              <span class="badge">{{ $tasksCount }}</span>
+            @if ($taskCount > 0)
+              <span class="badge">{{ $taskCount }}</span>
             @endif
           </a>
         </li>
