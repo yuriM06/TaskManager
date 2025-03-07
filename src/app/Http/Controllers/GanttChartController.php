@@ -29,6 +29,6 @@ class GanttChartController extends Controller
     {
         $tasks = Task::orderBy('due_date', 'asc')->get();
 
-        return view('my_task', compact('tasks'));
+        return view('gantt_chart', compact('tasks'));
     }
 }

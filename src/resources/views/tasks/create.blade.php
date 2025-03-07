@@ -49,7 +49,7 @@
 
             <div class="mb-3">
                 <label for="progress" class="form-label">進捗:</label>
-                <input type="number" name="progress" class="form-control" step="1" min="0" max="100" value="{{ old('progress', 0) }}" placeholder="進捗 (0〜100)">
+                <input type="number" name="progress" class="form-control" step="1" min="0" max="100" value="{{ old('progress', 0) }}" placeholder="進捗 (0〜100)%">
                 @error('progress')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror

@@ -14,7 +14,7 @@ Route::put('/tasks/{id}', [TaskController::class, 'update']);
 
 // ガントチャート
 Route::get('/my_task', [GanttChartController::class, 'getTasksForGanttChart'])->name('my_task');
-Route::put('/my_task', [GanttChartController::class, 'update'])->name('my_task.update');
+Route::put('/gantt_chart', [GanttChartController::class, 'update'])->name('my_task.update');
 
 // ヘッダー
 Route::get('/create', [TaskController::class, 'create'])->name('tasks.create');
