@@ -49,6 +49,7 @@
               date_format: "YYYY-MM-DD",
               // タスク日付変更時
               on_date_change: function(task, start, end) {
+                end.setDate(end.getDate() + 1); // FrappeGunttでのendは前日の23:59:59を表すため
                   var modifiedTask = modifiedTasks.find(t => t.id === task.id);
                   if (modifiedTask) {
                       modifiedTask.start = start;
