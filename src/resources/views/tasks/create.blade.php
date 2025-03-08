@@ -25,7 +25,7 @@
 
             <div class="mb-3">
                 <label for="status" class="form-label">ステータス:</label>
-                <x-status-select name="status" class="form-control"/>
+                <x-status-select name="status" class="form-control" :selected="old('status', $task->status ?? '')"/>
                 @error('status')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror

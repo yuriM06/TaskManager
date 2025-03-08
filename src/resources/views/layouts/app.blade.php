@@ -53,7 +53,7 @@
       <a class="nav-link" href="{{ route('tasks.index') }}">課題一覧</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="{{ route('my_task') }}">個別課題</a>
+      <a class="nav-link" href="{{ route('gantt_chart') }}">ガントチャート</a>
     </li>
   </ul>
 

@@ -1,8 +1,6 @@
-@extends('layouts.my_task')
+@extends('layouts.gantt_chart')
 
 @section('ganttChart')
-<p>aaa</p>
-<h2>個別課題 - ガントチャート</h2>
   <script type="text/javascript">
       document.addEventListener("DOMContentLoaded", function() {
 

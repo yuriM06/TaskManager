@@ -6,7 +6,7 @@
     <script src="https://cdn.jsdelivr.net/npm/frappe-gantt/dist/frappe-gantt.umd.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/frappe-gantt/dist/frappe-gantt.css">
 
-    <form id="updateForm" action="{{ route('my_task.update') }}" method="POST" onSubmit="return checkTask()">
+    <form id="updateForm" action="{{ route('gantt_chart.update') }}" method="POST" onSubmit="return checkTask()">
         @csrf
         @method('PUT')
         <input type="hidden" name="modifiedTasks" id="modifiedTasks">

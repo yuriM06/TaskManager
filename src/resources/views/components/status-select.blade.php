@@ -15,7 +15,7 @@
 @if(request()->routeIs('tasks.show') || request()->routeIs('tasks.index'))
     {{ $statusOptions[$selected] ?? '未設定' }}
 @else
-    <select name="{{ $name ?? 'status' }}" {{$attributes}}>
+    <select name="{{ $name }}" {{$attributes}}>
         @foreach ($statusOptions as $value => $label)
             <option value="{{ $value }}" {{ $selected == $value ? 'selected' : '' }}>
                 {{ $label }}

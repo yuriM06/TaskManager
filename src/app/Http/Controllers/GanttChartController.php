@@ -21,7 +21,7 @@ class GanttChartController extends Controller
             $task->save();
         }
 
-        return to_route('my_task')->with('success', 'タスクが更新されました');
+        return to_route('gantt_chart')->with('success', 'タスクが更新されました');
     }
 
     // ガントチャートライブラリで使用するデータの取得
@@ -29,6 +29,6 @@ class GanttChartController extends Controller
     {
         $tasks = Task::orderBy('due_date', 'asc')->get();
 
-        return view('gantt_chart', compact('tasks'));
+        return view('gantt_chart_update', compact('tasks'));
     }
 }

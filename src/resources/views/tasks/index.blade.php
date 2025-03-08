@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <h2 class="mb-4">タスク一覧</h2>
+        <h2 class="mb-4">課題一覧</h2>
 
         @if (session('success'))
             <div class="alert alert-success">
