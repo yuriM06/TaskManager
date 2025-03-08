@@ -14,7 +14,7 @@
                     <x-status-select :selected="$task->status" disabled />
                 </p>
 
-                <p class="card-text"><strong>作成日:</strong> {{ $task->created_at->format('Y-m-d') }}</p>
+                <p class="card-text"><strong>開始日:</strong> {{ $task->start_date->format('Y-m-d') }}</p>
                 <p class="card-text"><strong>期日:</strong> {{ $task->due_date ? $task->due_date->format('Y-m-d') : '未設定' }}</p>
 
                 <div class="d-flex">
