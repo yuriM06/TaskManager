@@ -3,8 +3,8 @@
 @section('content')
     <h2>個別課題 - ガントチャート</h2>
 
-    <script src="https://cdn.jsdelivr.net/npm/frappe-gantt/dist/frappe-gantt.umd.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/frappe-gantt/dist/frappe-gantt.css">
+    {{-- @yield('cdn') --}}
+    @include('layouts.cdn')
 
     <form id="updateForm" action="{{ route('gantt_chart.update') }}" method="POST" onSubmit="return checkTask()">
         @csrf
