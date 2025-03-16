@@ -17,6 +17,8 @@
                 <p class="card-text"><strong>開始日:</strong> {{ $task->start_date->format('Y-m-d') }}</p>
                 <p class="card-text"><strong>期日:</strong> {{ $task->due_date ? $task->due_date->format('Y-m-d') : '未設定' }}</p>
 
+                <p class="card-text"><strong>親タスク:</strong> {{ $task->parent?->title ?? 'なし' }}</p>
+
                 <div class="d-flex">
                     <a href="{{ route('tasks.edit', $task->id) }}" class="btn btn-primary me-2">編集</a>
 

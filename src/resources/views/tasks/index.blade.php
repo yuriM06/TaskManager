@@ -22,6 +22,7 @@
                             <th>タイトル</th>
                             <th>ステータス</th>
                             <th>開始日</th>
+                            <th>親タスク</th>
                             <th>期日</th>
                             <th>操作</th>
                         </tr>
@@ -36,6 +37,9 @@
                                     <x-status-select :selected="$task->status" disabled />
                                 </td>
                                 <td>{{ $task->start_date->format('Y-m-d') }}</td>
+                                <td>
+                                    {{ $task->parent?->title ?? 'なし' }}
+                                </td>
                                 <td>{{ $task->due_date ? $task->due_date->format('Y-m-d') : '未設定' }}</td>
                                 <td>
                                     <a href="{{ route('tasks.edit', $task->id) }}" class="btn btn-sm btn-primary">編集</a>

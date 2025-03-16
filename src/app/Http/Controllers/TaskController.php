@@ -10,7 +10,7 @@ class TaskController extends Controller
     // 一覧表示
     public function index()
     {
-        $tasks = Task::all();
+        $tasks = Task::with('parent')->get();
 
         return view('tasks.index', compact('tasks'));
     }

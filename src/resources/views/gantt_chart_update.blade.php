@@ -29,7 +29,7 @@
                   start: start,
                   end: end,
                   progress: parseFloat(task.progress) || 0,
-                  dependencies: task.parent_id ? task.parent_id : ""
+                  dependencies: task.parent_id ? [task.parent_id] : []
               };
           });
 
