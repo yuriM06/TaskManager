@@ -74,4 +74,10 @@ class TaskController extends Controller
 
         return view('alarms', compact('tasks', 'tasksCount'));
     }
+
+    // タスク検索
+    public function search()
+    {
+        //
+    }
 }
