@@ -12,7 +12,7 @@
 @endphp
 
 {{-- プルダウンのステータス --}}
-@if(request()->routeIs('tasks.show') || request()->routeIs('tasks.index'))
+@if(request()->routeIs('tasks.show') || request()->routeIs('tasks.index') || request()->routeIs('tasks.search'))
     {{ $statusOptions[$selected] ?? '未設定' }}
 @else
     <select name="{{ $name }}" {{$attributes}}>

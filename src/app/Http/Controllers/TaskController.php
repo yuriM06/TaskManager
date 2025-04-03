@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Task;
 use App\Http\Requests\TaskRequest;
+use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
@@ -76,8 +77,14 @@ class TaskController extends Controller
     }
 
     // タスク検索
-    public function search()
+    public function search(Request $request)
     {
-        //
+        $query = $request->input('search_task');
+
+        $tasks = Task::when($query, function ($queryBuilder) use ($query) {
+            return $queryBuilder->where('title', 'LIKE', "%{$query}%");
+        })->get();
+
+        return view('tasks.search', compact('tasks', 'query'));
     }
 }

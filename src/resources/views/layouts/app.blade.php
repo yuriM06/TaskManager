@@ -21,9 +21,9 @@
     <div class="d-flex justify-content-between align-items-center container-fluid header-color">
       <a class="navbar-brand fs-3" href="/">タスク管理</a>
       <ul class="header-nav">
-        <form action="{{ route('tasks.search')}}">
+        <form action="{{ route('tasks.search') }}" method="GET">
           <input type="text" name="search_task">
-          <input type="submit" name="submit" value="検索">
+          <input type="submit" value="検索">
         </form>
         <li>
           <a href="{{ route('tasks.create') }}">新規作成</a>
