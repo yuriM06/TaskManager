@@ -15,7 +15,16 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('description');
+
             $table->string('status')->default('未完了');
+            $table->integer('progress')->default(0);
+            $table->date('due_date');
+            $table->date('start_date');
+
+            $table->unsignedBigInteger('parent_id')->nullable();
+            $table->foreign('parent_id')->references('id')->on('tasks');
+
+            $table->softDeletes();
             $table->timestamps();
         });
     }
