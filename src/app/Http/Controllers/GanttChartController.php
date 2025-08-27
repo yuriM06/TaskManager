@@ -2,22 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\GanttChartRequest;
+use Illuminate\Http\Request;
 use App\Models\Task;
 use Carbon\Carbon;
 
 class GanttChartController extends Controller
 {
     // ガントチャートの日程更新処理
-    public function update(GanttChartRequest $request)
+    public function update(Request $request)
     {
         // 受け取ったmodifiedTasksをデコード
         $modifiedTasks = json_decode($request->input('modifiedTasks'), true);
 
         foreach ($modifiedTasks as $modifiedTask) {
             $task = Task::find($modifiedTask['id']);
-            $task->start_date = Carbon::parse($modifiedTask['start'])->setTimezone('Asia/Tokyo')->format('Y-m-d H:i:s');
-            $task->due_date = Carbon::parse($modifiedTask['end'])->setTimezone('Asia/Tokyo')->format('Y-m-d H:i:s');
+            $task->start_date = Carbon::parse($modifiedTask['start']);
+            $task->due_date = Carbon::parse($modifiedTask['end']);
             $task->save();
         }
 
