@@ -8,10 +8,15 @@ use Carbon\Carbon;
 
 class GanttChartController extends Controller
 {
-    // ガントチャートの日程更新処理
+    /**
+     * [POST]ガントチャートの日付更新処理
+     * リクエストから受け取ったmodifiedTasksをデコードし、各タスクの開始日・期限をを更新する
+     * 更新後ガントチャート画面へリダイレクト
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function update(Request $request)
     {
-        // 受け取ったmodifiedTasksをデコード
         $modifiedTasks = json_decode($request->input('modifiedTasks'), true);
 
         foreach ($modifiedTasks as $modifiedTask) {
@@ -24,7 +29,12 @@ class GanttChartController extends Controller
         return to_route('gantt_chart')->with('success', 'タスクが更新されました');
     }
 
-    // ガントチャートライブラリで使用するデータの取得
+    /**
+     * ガントチャートライブラリ用のタスクデータを取得
+     *
+     * データベースからタスクを昇順で取得し、viewに渡す
+     * @return \Illuminate\View\View
+     */
     public function getTasksForGanttChart()
     {
         $tasks = Task::orderBy('due_date', 'asc')->get();
