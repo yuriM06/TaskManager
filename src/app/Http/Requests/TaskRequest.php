@@ -6,6 +6,10 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class TaskRequest extends FormRequest
 {
+    public const TITLE_MAX_LENGTH = 255;
+    public const PROGRESS_MIN = 0;
+    public const PROGRESS_MAX = 100;
+
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -22,12 +26,12 @@ class TaskRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string|max:255',
+            'title' => 'required|string|max:' . self::TITLE_MAX_LENGTH,
             'description' => 'required|string',
             'status' => 'required|string',
             'start_date' => 'date',
             'due_date' => 'date|after_or_equal:start_date',
-            'progress' => 'numeric|min:0|max:100',
+            'progress' => 'numeric|min:' . self::PROGRESS_MIN . '|max:' . self::PROGRESS_MAX,
             'parent_id' => 'nullable|exists:tasks,id',
         ];
     }
@@ -38,7 +42,7 @@ class TaskRequest extends FormRequest
         return [
             'title.required' => 'タイトルは必須です。',
             'title.string' => 'タイトルは文字列である必要があります。',
-            'title.max' => 'タイトルは最大255文字までです。',
+            'title.max' => 'タイトルは最大' . self::TITLE_MAX_LENGTH . '文字までです。',
 
             'description.required' => '説明は必須です。',
             'description.string' => '説明は文字列で入力してください。',
@@ -52,8 +56,8 @@ class TaskRequest extends FormRequest
             'due_date.after_or_equal' => '期日は開始日以降の日付を指定してください。',
 
             'progress.numeric' => '進捗は数値で入力してください。',
-            'progress.min' => '進捗は0以上で入力してください。',
-            'progress.max' => '進捗は100以下で入力してください。',
+            'progress.min' => '進捗は' . self::PROGRESS_MIN . '以上で入力してください。',
+            'progress.max' => '進捗は' . self::PROGRESS_MAX . '以下で入力してください。',
 
             'parent_id.exists' => '選択された親タスクが存在しません。',
         ];
