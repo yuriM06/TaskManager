@@ -135,12 +135,12 @@ class TaskController extends Controller
      */
     public function search(Request $request)
     {
-        $query = $request->input('search_task');
+        $searchWord = $request->input('search_task');
 
-        $tasks = Task::when($query, function ($queryBuilder) use ($query) {
-            return $queryBuilder->where('title', 'LIKE', "%{$query}%");
+        $tasks = Task::when($searchWord, function ($taskQuery) use ($searchWord) {
+            return $taskQuery->where('title', 'LIKE', "%{$searchWord}%");
         })->get();
 
-        return view('tasks.search', compact('tasks', 'query'));
+        return view('tasks.search', compact('tasks', 'searchWord'));
     }
 }
