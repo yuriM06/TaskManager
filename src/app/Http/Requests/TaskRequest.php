@@ -42,7 +42,7 @@ class TaskRequest extends FormRequest
         return [
             'title.required' => 'タイトルは必須です。',
             'title.string' => 'タイトルは文字列である必要があります。',
-            'title.max' => 'タイトルは最大' . self::TITLE_MAX_LENGTH . '文字までです。',
+            'title.max' => 'タイトルは最大:max文字までです。',
 
             'description.required' => '説明は必須です。',
             'description.string' => '説明は文字列で入力してください。',
@@ -56,8 +56,8 @@ class TaskRequest extends FormRequest
             'due_date.after_or_equal' => '期日は開始日以降の日付を指定してください。',
 
             'progress.numeric' => '進捗は数値で入力してください。',
-            'progress.min' => '進捗は' . self::PROGRESS_MIN . '以上で入力してください。',
-            'progress.max' => '進捗は' . self::PROGRESS_MAX . '以下で入力してください。',
+            'progress.min' => '進捗は:min以上で入力してください。',
+            'progress.max' => '進捗は:max以下で入力してください。',
 
             'parent_id.exists' => '選択された親タスクが存在しません。',
         ];

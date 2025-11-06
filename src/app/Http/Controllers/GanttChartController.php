@@ -10,7 +10,7 @@ class GanttChartController extends Controller
 {
     /**
      * [POST]ガントチャートの日付更新処理
-     * リクエストから受け取ったmodifiedTasksをデコードし、各タスクの開始日・期限をを更新する
+     * リクエストから渡されたJSON形式の変更後のタスクをデコードし、各タスクの開始日・期限を更新する
      * 更新後ガントチャート画面へリダイレクト
      *
      * @return \Illuminate\Http\RedirectResponse
