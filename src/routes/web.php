@@ -1,16 +1,22 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\GanttChartController;
 use App\Http\Controllers\TaskController;
+use Illuminate\Support\Facades\Route;
 
 Route::resource('tasks', TaskController::class);
 
 // メニュー
 Route::view('/', 'home')->name('home');
 Route::get('/tasks', [TaskController::class, 'index'])->name('tasks.index');
-Route::view('/my_task', 'my_task')->name('my_task');
+Route::put('/tasks/{id}', [TaskController::class, 'update']);
+
+// ガントチャート
+Route::get('/gantt_chart', [GanttChartController::class, 'getTasksForGanttChart'])->name('gantt_chart');
+Route::put('/gantt_chart_update', [GanttChartController::class, 'update'])->name('gantt_chart.update');
 
 // ヘッダー
-Route::view('/create', 'tasks.create')->name('create');
-// Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications');
-// Route::get('/alarms', [AlarmController::class, 'index'])->name('alarms');
+Route::get('/create', [TaskController::class, 'create'])->name('tasks.create');
+Route::view('notifications', 'notifications')->name('notifications');
+Route::get('/alarms', [TaskController::class, 'alarms'])->name('alarms');
+Route::get('/search', [TaskController::class, 'search'])->name('tasks.search');

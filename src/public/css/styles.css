@@ -1,25 +1,28 @@
-/* ヘッダーのスタイル */
-.header-container {
-  background-color: #00bcd4; /* 水色 */
-  color: white;
-  margin: 0; /* 隙間をなくす */
-  padding: 5px 0; /* 細くする */
+a{
+  color: inherit;
 }
 
-.header-nav ul {
-  list-style-type: none;
+/* ヘッダー */
+.header-color{
+  background-color: #00bcd4;
+  padding: 20px 16px;
+  margin: 0;
+}
+.header-menu{
+  color: #ffffff;
+}
+
+.header-nav {
+  list-style: none;
   display: flex;
-  justify-content: flex-end; /* 右寄せ */
+  justify-content: flex-end;
   padding: 0;
-  margin: 0; /* ヘッダー内の余白をなくす */
-}
-
-.header-nav li {
-  margin: 0 10px; /* リスト間のスペース */
+  margin: 0;
+  gap: 10px;
 }
 
 .header-nav a {
-  color: white;
+  color: #ffffff;
   text-decoration: none;
   font-weight: bold;
 }
@@ -28,28 +31,19 @@
   color: #007bff;
 }
 
-/* 横並びレイアウト */
-.container {
-  display: flex;
-  height: 100vh;
-  margin-top: 0; /* ヘッダーとの隙間をなくす */
-}
-
 /* メニュー部分 */
 .menu {
-  width: 10%;
+  height: calc(100vh - 80px);
   background-color: #f4f4f4;
   padding: 20px;
   margin-top: 0;
 }
 
-/* コンテンツ部分 */
 .content {
   width: 80%;
   padding: 20px;
 }
 
-/* メニューのスタイル */
 .menu ul {
   list-style-type: none;
   padding: 0;
@@ -68,4 +62,29 @@
 
 .menu a:hover {
   color: #007bff;
+}
+
+/* アラームのバッジ */
+.badge {
+  background-color: red;
+  color: white;
+  font-size: 10px;
+  line-height: 1;
+  font-weight: bold;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: -8px;
+  right: -10px;
+}
+
+.alarm-link {
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+  color: black;
 }

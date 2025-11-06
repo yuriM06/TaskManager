@@ -1,0 +1,6 @@
+{{-- @extends('layouts.gantt_chart')
+
+@section('cdn') --}}
+    <script src="https://cdn.jsdelivr.net/npm/frappe-gantt/dist/frappe-gantt.umd.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/frappe-gantt/dist/frappe-gantt.css">
+{{-- @endsection --}}

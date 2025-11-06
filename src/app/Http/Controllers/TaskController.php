@@ -2,81 +2,145 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TaskRequest;
 use App\Models\Task;
 use Illuminate\Http\Request;
 
+/**
+ * タスク管理に関する操作用コントローラー
+ * 一覧表示・新規作成・更新・削除・検索・アラーム通知
+ */
 class TaskController extends Controller
 {
-    // 一覧表示
+    /**
+     * [GET]タスク一覧表示
+     * タスク情報を取得、一覧表示
+     *
+     * @return \Illuminate\View\View
+     */
     public function index()
     {
-        $tasks = Task::all(); // すべてのタスクを取得
-        return view('tasks.index', compact('tasks')); // ビューに渡す
+        $tasks = Task::with('parent')->get();
+
+        return view('tasks.index', compact('tasks'));
     }
 
-    // 新規作成フォーム
+    /**
+     * [GET]新規タスク作成フォーム表示
+     * 新規タスク作成画面を表示する
+     *
+     * @return \Illuminate\View\View
+     */
     public function create()
     {
-        return view('tasks.create');
+        $tasks = Task::all();
+
+        return view('tasks.create', compact('tasks'));
     }
 
-    // 新規作成処理
-    public function store(Request $request)
+    /**
+     * [POST]新規タスク登録処理
+     * タスク登録後一覧画面へとリダイレクト
+     *
+     * @param  \App\Http\Requests\TaskRequest  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function store(TaskRequest $request)
     {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'status' => 'required|string',
-        ]);
+        Task::create($request->validated());
 
-        Task::create([
-            'title' => $request->title,
-            'description' => $request->description,
-            'status' => $request->status,
-        ]);
-
-        return redirect()->route('tasks.task_all')->with('success', 'タスクが作成されました');
+        return to_route('tasks.index')->with('success', 'タスクが作成されました');
     }
 
-    // 詳細表示
+    /**
+     * [GET]タスク詳細表示
+     * 指定されたIDのタスク情報を取得し、編集画面を表示
+     *
+     * @param  int  $id  タスクID
+     * @return \Illuminate\View\View
+     */
     public function show($id)
     {
         $task = Task::findOrFail($id);
+
         return view('tasks.show', compact('task'));
     }
 
-    // 編集フォーム
+    /**
+     * [GET]タスク編集フォーム表示
+     * 既存の指定されたIDのタスクをを取得し、編集画面を表示
+     *
+     * @param  int  $id  タスクID
+     * @return \Illuminate\View\View
+     */
     public function edit($id)
     {
+        $tasks = Task::all();
         $task = Task::findOrFail($id);
-        return view('tasks.edit', compact('task'));
+
+        return view('tasks.edit', compact('tasks', 'task'));
     }
 
-    // 編集処理
-    public function update(Request $request, $id)
+    /**
+     * [PUT]タスク更新処理
+     * 既存の指定されたIDのタスクを更新し、一覧画面へとリダイレクト
+     *
+     * @param  \App\Http\Requests\TaskRequest  $request
+     * @param  int  $id  タスクID
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update(TaskRequest $request, $id)
     {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'status' => 'required|string',
-        ]);
-
         $task = Task::findOrFail($id);
-        $task->update([
-            'title' => $request->title,
-            'description' => $request->description,
-            'status' => $request->status,
-        ]);
+        $task->update($request->validated());
 
-        return redirect()->route('tasks.task_all')->with('success', 'タスクが更新されました');
+        return to_route('tasks.index')->with('success', 'タスクが更新されました');
     }
 
-    // 削除処理
+    /**
+     * [DELETE]タスク削除処理
+     * 既存の指定されたIDのタスクを削除して、一覧画面へリダイレクト
+     *
+     * @param  int  $id  タスクID
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function destroy($id)
     {
         $task = Task::findOrFail($id);
         $task->delete();
 
-        return redirect()->route('tasks.task_all')->with('success', 'タスクが削除されました');
+        return to_route('tasks.index')->with('success', 'タスクが削除されました');
+    }
+
+    /**
+     * [GET]アラーム通知
+     * タスク期日が当日または期日切れのものを取得し、アラームを表示
+     *
+     * @return \Illuminate\View\View
+     */
+    public function alarms()
+    {
+        $tasks = Task::alertTasks()->get();
+        $tasksCount = $tasks->count();
+
+        return view('alarms', compact('tasks', 'tasksCount'));
+    }
+
+    /**
+     * [GET]タスク検索
+     * 検索フォームに入力されたキーワードをもとに、タイトルを部分一致検索を行い表示する
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\View\View
+     */
+    public function search(Request $request)
+    {
+        $searchWord = $request->input('search_task');
+
+        $tasks = Task::when($searchWord, function ($taskSearch) use ($searchWord) {
+            return $taskSearch->where('title', 'LIKE', "%{$searchWord}%");
+        })->get();
+
+        return view('tasks.search', compact('tasks', 'searchWord'));
     }
 }
